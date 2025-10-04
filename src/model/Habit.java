@@ -6,13 +6,15 @@ public class Habit {
     private int target;
     private String targetBasis;
     private int streak;
+    private boolean isAdaptive = false;
     private ArrayList<HabitLog> logs;
-    public Habit(String name, int target, String basis){
+    public Habit(String name, int target, String basis, boolean isAdaptive){
         this.name = name;
         this.target = target;
         this.targetBasis = basis;
         this.streak = 0;
         this.logs = new ArrayList<>();
+        this.isAdaptive = isAdaptive;
     }
     public void addLog(boolean status){
         HabitLog newLog = new HabitLog(LocalDate.now(),status);

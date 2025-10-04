@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class User {
     private String userName;
     private ArrayList<Habit> habits;
-
+    private int daysUsed = 0;
     public User(String userName){
         this.userName = userName;
         this.habits = new ArrayList<>();
@@ -16,7 +16,7 @@ public class User {
         this.habits = new ArrayList<>();
     }
 
-    public void addHabit(String name, int target, String targetBasis){
+    public void addHabit(String name, int target, String targetBasis, boolean isAdaptive){
         boolean exists = false;
         for(Habit tempHabit : habits){
             if(tempHabit.getName().equals(name) && tempHabit.getTarget()==target){
@@ -26,7 +26,7 @@ public class User {
             }
         }
         if(!exists){
-            Habit newHabit = new Habit(name,target,targetBasis);
+            Habit newHabit = new Habit(name,target,targetBasis,isAdaptive);
             this.habits.add(newHabit);
             System.out.println("Habit Added Successfully\n");
         }
