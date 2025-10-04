@@ -105,4 +105,9 @@ public class Habit {
     public int getTarget() {
         return this.target;
     }
+
+    public void scanHabitStreaks(){
+        //to implement
+        // scan streaks and check if status is two for consecutive days
+    }
 }
