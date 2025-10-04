@@ -22,27 +22,27 @@ public class Habit {
                 this.logs.add(newLog);
                 if(newLog.getStatus()){
                     increaseStreak();
-                    System.out.printf("Log Added Successfully, Streak increased to : %d\n",this.streak);
+                    System.out.printf("Log Added Successfully, Streak increased to : %d\n\n",this.streak);
                 }
                 else{
                     resetStreak();
-                    System.out.printf("Log Added Successfully, Streak reset to : %d\n",this.streak);
+                    System.out.printf("Log Added Successfully, Streak reset to : %d\n\n",this.streak);
                 }
 
             }
             else{
-                System.out.println("Cannot add two logs in the same day !");
+                System.out.println("Cannot add two logs in the same day !\n");
             }
         }
         else{
             this.logs.add(newLog);
             if(newLog.getStatus()){
                 increaseStreak();
-                System.out.printf("Log Added Successfully, Streak increased to : %d\n",this.streak);
+                System.out.printf("Log Added Successfully, Streak increased to : %d\n\n",this.streak);
             }
             else{
                 resetStreak();
-                System.out.printf("Log Added Successfully, Streak reset to : %d\n",this.streak);
+                System.out.printf("Log Added Successfully, Streak reset to : %d\n\n",this.streak);
             }
         }
     }
@@ -94,5 +94,13 @@ public class Habit {
             }
         }
         return weeklyReport.trim();
+    }
+
+    public String getName(){
+        return this.name;
+    }
+
+    public int getTarget() {
+        return this.target;
     }
 }
