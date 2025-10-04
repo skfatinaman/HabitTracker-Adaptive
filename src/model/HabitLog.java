@@ -17,7 +17,10 @@ public class HabitLog {
     public boolean getStatus(){
         return this.status;
     }
+    public LocalDate getDate(){
+        return this.date;
+    }
     public String toString(){
-        return this.date + "→" + (this.status ? "Completed" : "Incomplete");
+        return this.date + " → " + (this.status ? "Completed" : "Incomplete");
     }
 }
