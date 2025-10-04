@@ -82,4 +82,17 @@ public class Habit {
     public ArrayList<HabitLog> getLogs(){
         return this.logs;
     }
+
+    public String getWeeklyReport(){
+        String weeklyReport = String.format("Weekly report for %s:\n", this.name);
+        int count = 0;
+        for(HabitLog logs : this.logs){
+            weeklyReport += logs.toString()+'\n';
+            count ++;
+            if(count==7){
+                break;
+            }
+        }
+        return weeklyReport.trim();
+    }
 }

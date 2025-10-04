@@ -9,8 +9,6 @@ public class Main {
         System.out.println(habit.getReport());
         habit.addLog(true);
         System.out.println(habit.getReport());
-        for(HabitLog log : habit.getLogs()){
-            System.out.println(log.toString());
-        }
+        System.out.println(habit.getWeeklyReport());
     }
 }
