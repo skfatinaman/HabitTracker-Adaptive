@@ -48,11 +48,11 @@ It automatically adjusts your goals based on your performance — increasing tar
 
 ### Option 1: Run the JAR file
 ```bash
-java -jar HabitTracker-Adaptive.jar
+java -jar HabitTrackerApp.jar
 ```
 
 ### Option 2: Use the EXE file (for Windows)
-You can run the provided `HabitTracker-Adaptive.exe` file directly to launch the CLI app.
+You can run the provided `HabitTrackerApp.exe` file directly to launch the CLI app.
 
 ---
 
