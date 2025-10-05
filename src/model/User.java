@@ -5,92 +5,97 @@ import java.util.ArrayList;
 public class User {
     private String userName;
     private ArrayList<Habit> habits;
-    private int daysUsed = 0;
-    public User(String userName){
+
+    public User(String userName) {
         this.userName = userName;
         this.habits = new ArrayList<>();
     }
 
-    public User(){
-        this.userName = "Default User";
-        this.habits = new ArrayList<>();
+    public User() {
+        this("default_user");
     }
 
-    public void addHabit(String name, int target, String targetBasis, boolean isAdaptive){
-        boolean exists = false;
-        for(Habit tempHabit : habits){
-            if(tempHabit.getName().equals(name) && tempHabit.getTarget()==target){
-                System.out.println("Habit already exists\n");
-                exists = true;
-                break;
+    // Add habit object (used by storage loader)
+    public void addHabit(Habit habit) {
+        // prevent duplicate name (case-insensitive)
+        Habit existing = findHabitByName(habit.getName());
+        if (existing != null) {
+            System.out.println("Habit with that name already exists: " + habit.getName());
+            return;
+        }
+        this.habits.add(habit);
+    }
+
+    // Convenience method to create and add
+    public void addHabit(String name, int target, String targetBasis, boolean isAdaptive) {
+        if (findHabitByName(name) != null) {
+            System.out.println("Habit with that name already exists: " + name);
+            return;
+        }
+        Habit habit = new Habit(name, target, targetBasis, isAdaptive);
+        this.habits.add(habit);
+        System.out.println("Habit added: " + name);
+    }
+
+    // Remove habit by name (case-insensitive)
+    public boolean removeHabit(String name) {
+        for (int i = 0; i < habits.size(); i++) {
+            if (habits.get(i).getName().equalsIgnoreCase(name)) {
+                habits.remove(i);
+                System.out.println("Habit removed: " + name);
+                return true;
             }
         }
-        if(!exists){
-            Habit newHabit = new Habit(name,target,targetBasis,isAdaptive);
-            this.habits.add(newHabit);
-            System.out.println("Habit Added Successfully\n");
-        }
+        System.out.println("No habit found to remove: " + name);
+        return false;
     }
 
-    public void removeHabit(String name, int target){
-        boolean removed = false;
-        for(int i = 0; i < this.habits.size(); i++){
-            Habit tempHabit = this.habits.get(i);
-            if(tempHabit.getName().equals(name) && tempHabit.getTarget()==target){
-                this.habits.remove(i);
-                removed = true;
-                break;
-            }
+    // Find a habit by name (case-insensitive)
+    public Habit findHabitByName(String name) {
+        for (Habit h : this.habits) {
+            if (h.getName().equalsIgnoreCase(name)) return h;
         }
-        if(removed){
-            System.out.println("Habit removed from tracker\n");
-        }
-        else{
-            System.out.println("No such habit exists\n");
-        }
-    }
-
-    public String getSingleReport(String name){
-        for (Habit tempHabit : this.habits) {
-            if (tempHabit.getName().equals(name)) {
-                return tempHabit.getReport();
-            }
-        }
-        return "No such habit !";
-    }
-
-    public String getAllReport(){
-        if(this.habits.isEmpty()){
-            return "No Habits in Tracker";
-        }
-        String allReport = "All Habits Report: \n";
-        for(Habit tempHabit : this.habits){
-            allReport += tempHabit.getReport() + '\n';
-        }
-        return allReport;
-    }
-
-    public String singleWeeklyReport(String name){
-        for (Habit tempHabit : this.habits) {
-            if (tempHabit.getName().equals(name)) {
-                return tempHabit.getWeeklyReport();
-            }
-        }
-        return "No such habit !";
-    }
-
-    public void addHabitLog(String name, boolean status){
-        for (Habit tempHabit : this.habits){
-            if(tempHabit.getName().equals(name)){
-                tempHabit.addLog(status);
-                return;
-            }
-        }
-        System.out.println("No such habit to log for\n");
+        return null;
     }
 
     public ArrayList<Habit> getHabits() {
         return this.habits;
     }
 
+    public String getUserName() {
+        return this.userName;
+    }
+
+    // Add log to a named habit
+    public void addHabitLog(String name, boolean status) {
+        Habit habit = findHabitByName(name);
+        if (habit == null) {
+            System.out.println("No such habit to log for: " + name);
+            return;
+        }
+        habit.addLog(status);
+    }
+
+    // Reports
+    public String getSingleReport(String name) {
+        Habit h = findHabitByName(name);
+        if (h == null) return "No such habit.";
+        return h.getReport();
+    }
+
+    public String getAllReport() {
+        if (habits.isEmpty()) return "No habits in tracker.";
+        StringBuilder sb = new StringBuilder();
+        sb.append("All Habits Report:\n");
+        for (Habit h : habits) {
+            sb.append(h.getReport()).append(System.lineSeparator());
+        }
+        return sb.toString();
+    }
+
+    public String getWeeklyReport(String name) {
+        Habit h = findHabitByName(name);
+        if (h == null) return "No such habit.";
+        return h.getWeeklyReport();
+    }
 }
