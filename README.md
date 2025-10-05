@@ -122,7 +122,7 @@ This is my **first full Java project**, where I learned:
 
 ---
 
-## 👤 Author -- Sheikh Fatin Aman
+## 👤 Author 
 
 **Fatin Aman**  
 GitHub: [@skfatinaman](https://github.com/skfatinaman)
