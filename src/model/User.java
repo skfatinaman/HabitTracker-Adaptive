@@ -88,4 +88,9 @@ public class User {
         }
         System.out.println("No such habit to log for\n");
     }
+
+    public ArrayList<Habit> getHabits() {
+        return this.habits;
+    }
+
 }

@@ -1,4 +1,5 @@
 package model;
+import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.time.LocalDate;
 public class Habit {
@@ -18,11 +19,12 @@ public class Habit {
     }
     public void addLog(boolean status){
         HabitLog newLog = new HabitLog(LocalDate.now(),status);
+        LocalDate currentDate = newLog.getDate();
         if(!this.logs.isEmpty()){
             LocalDate previousDate = this.logs.getLast().getDate();
-            if(!(previousDate.isEqual(newLog.getDate()))){
+            if(ChronoUnit.DAYS.between(previousDate,currentDate)!=0){
                 this.logs.add(newLog);
-                if(newLog.getStatus()){
+                if(newLog.getStatus() && ChronoUnit.DAYS.between(previousDate,currentDate)==1){
                     increaseStreak();
                     System.out.printf("Log Added Successfully, Streak increased to : %d\n\n",this.streak);
                 }
@@ -107,7 +109,27 @@ public class Habit {
     }
 
     public void scanHabitStreaks(){
-        //to implement
-        // scan streaks and check if status is two for consecutive days
+        LocalDate last = this.logs.getLast().getDate();
+        LocalDate currentDate = LocalDate.now();
+        if(!(last.isEqual(currentDate))){
+            this.resetStreak();
+        }
+    }
+
+    public boolean[] getWeeklyBool(){
+        boolean[] array = new boolean[7];
+        int counter = 0;
+        for(HabitLog habit : this.logs){
+            array[counter] = habit.getStatus();
+        }
+        return array;
+    }
+
+    public boolean isAdaptive() {
+        return this.isAdaptive;
+    }
+
+    public void setTarget(int newTarget) {
+        this.target = newTarget;
     }
 }
